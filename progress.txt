@@ -22,3 +22,6 @@ added content for Connect page
 
 Date 24-05-2026 00:54 after midnight
 added freelance page and its content
+
+Date 27-05-2026 22:13
+added project to the github .
