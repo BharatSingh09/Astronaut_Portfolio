@@ -1,0 +1,24 @@
+Date 15-05-2026 MidNight
+Todat i was able to make the scene where up and down movement were possible.
+Alse the scene and star is added and made move with layes.
+gltf is also added
+
+
+Date 16-05-2026 22:27
+abel to rig a prebuild astronaught model and adjust the lightining
+will work on leaning to generate actions
+
+Date 18-05-2026 01:28 (after midnight)
+added sections and content to all pages exept social and also added logo. 
+
+Date 19-08-2025 23:22
+added connect button and enhance action
+corrected format by adding component and adding react router and 
+add navigation to navigate page.
+
+
+Date 23-05-2026 16:44
+added content for Connect page 
+
+Date 24-05-2026 00:54 after midnight
+added freelance page and its content

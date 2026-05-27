@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.Connect_Main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+.connect_header{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: large;
+}
+.connect_main{
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+}
+.Left_section_c{
+    width: 50%;
+    justify-content: center;
+    display: flex;
+}
+.Right_section_c{
+    width: 50%;
+    justify-content: center;
+    display: flex;
+}
+.in_section{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin: 2rem;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.in_section span{
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+}
+/* blur transparent screen */
+.in_section::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(78, 78, 78, 0.375); /* transparent layer */
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: 0.3s ease;
+    z-index: 1;
+    /* pointer-events: none;   */
+}
+.hover_text{
+    text-align: center;
+    position: absolute;
+    color: rgb(255, 255, 255);
+    width: 80%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.3s ease;
+    z-index: 2;
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: x-large;
+    width: 100%;
+}
+
+/* show on hover */
+.in_section:hover::before{
+    opacity: 1;
+}
+.in_section:hover .hover_text{
+    opacity: 1;
+    transform: translateY(0);
+}
