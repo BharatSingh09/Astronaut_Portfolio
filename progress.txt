@@ -25,3 +25,8 @@ added freelance page and its content
 
 Date 27-05-2026 22:13
 added project to the github .
+
+Date 11-06-2026 23:39
+Corrected the content of mane page
+enhance the ui for the connect and freelancing page
+removed social layer from the homepage

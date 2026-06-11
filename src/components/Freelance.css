@@ -1,92 +1,167 @@
-@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
-.freelance_Main{
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+.freelance_Main {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    background: #0a0a0f;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    background-color: white;
-}
-.freelance_header{
-    width: 100vw;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+    color: white;
+}
+
+.freelance_header {
+    font-family: "Lobster Two", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    color: #fff;
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
     text-align: center;
-    font-family: "Lilita One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: xx-large;
 }
-.freelance_main{
-    width: 100vw;
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-}
-.left_section,
-.mid_section,
-.right_section{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.freelance_header {
+  overflow: hidden;
+  width: 100%;
 }
 
-.left_section img{
-    max-width: 80%;
-    height: auto;
-}
-.right_section img{
-    max-width: 80%;
-    height: auto;
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 15s linear infinite;
 }
 
-.mid_section{
-    flex-direction: column;
-}
-.mid_section form{
-    width: 60%;
-    padding: 10px 10px;
-}
-.mid_section form input{
-    width: 100%;
-    border-radius: 1rem;
-    padding: 5px 5px;
-    
-}
-.mid_section form textarea{
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 1rem;
-    padding: 5px 5px;
-    
-}
-.mid_section form label{
-    width: 100%;
-    padding-left: 10px;
-    font-family: sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-.mid_section select{
-
-    border: 2px solid black;
-    padding: 6px 5px;
-    border-radius: 1rem;
-    font-family: sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    width: 104%;
+.marquee_content {
+  display: flex;
+  gap: 4rem;
+  padding-right: 4rem;
 }
 
-.mid_section form button{
-    padding: 5px 20px;
-    border-radius: 1rem;
-    font-family: sans-serif;
-    font-weight: 400;
-    font-style: normal;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.freelance_subheader {
+    font-family: "Inter", sans-serif;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.38);
+    margin: 0 0 1rem;
+    text-align: center;
+}
+
+.freelance_card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1rem 2rem 1rem;
+    width: 100%;
+    max-width: 460px;
+    box-sizing: border-box;
+}
+
+.form_field {
+    margin-bottom: 1.25rem;
+}
+
+.form_label {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.form_input,
+.form_select,
+.form_textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    padding: 10px 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.form_input:focus,
+.form_select:focus,
+.form_textarea:focus {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.form_input::placeholder,
+.form_textarea::placeholder {
+    color: rgba(255, 255, 255, 0.22);
+}
+
+.form_select option {
+    background: #1a1a2e;
+    color: #fff;
+}
+
+.form_textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.5;
+}
+
+.char_count {
+    font-family: "Inter", sans-serif;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.25);
+    text-align: right;
+    margin-top: 5px;
+}
+
+.org_field {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+.org_field.show {
+    max-height: 100px;
+    opacity: 1;
+}
+
+.submit_btn {
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 12px;
+    border-radius: 100px;
+    background: #fff;
+    color: #0a0a0f;
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
     cursor: pointer;
+    letter-spacing: 0.01em;
+    transition: opacity 0.2s ease;
+}
+
+.submit_btn:hover {
+    opacity: 0.88;
+}
+
+@media (max-width: 500px) {
+    .freelance_card {
+        padding: 1.5rem 1.25rem 2rem;
+    }
 }

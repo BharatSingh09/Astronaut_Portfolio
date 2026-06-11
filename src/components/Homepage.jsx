@@ -100,9 +100,9 @@ export default function Homepage(){
                 <div className='nav_btn' onClick={()=>{setPage(6)}}>
                 SKILL 
                 </div>
-                <div className='nav_btn' onClick={()=>{setPage(8)}}>
+                {/* <div className='nav_btn' onClick={()=>{setPage(8)}}>
                 SOCIAL
-                </div>
+                </div> */}
                 <div className='connect' onClick={()=>{navigate('/connect')}}><img src='./telegram.png' alt='connect'/> Connect</div>
             </div>
             <div className='container_main'style={{
@@ -187,10 +187,11 @@ export default function Homepage(){
                         </div>
 
                         <ul className="exp-list">
+                            <h3>Project: KAVACH (Indian railways)</h3>
+                            <li>Develop Automation Tools</li>
                             <li>Developing Qt(C++) desktop applications for railway safety systems.</li>
-                            <li>Building Flask APIs and automation tools.</li>
+                            <li>Build NMS-VDU for visualisation simulation of train movements.</li>
                             <li>Designing Computer Vision models for OCR and object detection.</li>
-                            <li>Automating testing and validation workflows.</li>
                         </ul>
                         </div>
                     </div>
@@ -226,19 +227,17 @@ export default function Homepage(){
 
                     <div className="skills-container">
                         <div className="skill-tag">Python</div>
-                        <div className="skill-tag">C</div>
-                        <div className="skill-tag">Java</div>
+                        <div className="skill-tag">C++</div>
+                        <div className="skill-tag">DSA</div>
+                        <div className="skill-tag">AI & ML</div>
                         <div className="skill-tag">Qt (C++)</div>
                         <div className="skill-tag">Flask</div>
                         <div className="skill-tag">Django</div>
+                        <div className="skill-tag">React.js</div>
                         <div className="skill-tag">OpenCV</div>
                         <div className="skill-tag">LangChain</div>
-                        <div className="skill-tag">OCR</div>
-                        <div className="skill-tag">Scikit Learn</div>
-                        <div className="skill-tag">REST APIs</div>
                         <div className="skill-tag">Git</div>
                         <div className="skill-tag">Linux</div>
-                        <div className="skill-tag">Selenium</div>
                         <div className="skill-tag">ChromaDB</div>
                     </div>
                     </section>
@@ -286,16 +285,16 @@ export default function Homepage(){
                 </div>
                 <div className='layer_8'>
                 </div>
-                <div className='layer_9'>
-                <div style={{width:'100vw', display:'flex', gap:'35%'}}>
-                    <div className='linkedin'>
-                    <img src='./linkedin.png' alt='linkedin logo'  />
+                {/* <div className='layer_9'>
+                    <div style={{width:'100vw', display:'flex', gap:'35%'}}>
+                        <div className='linkedin'>
+                        <img src='./linkedin.png' alt='linkedin logo'  />
+                        </div>
+                        <div  className='github' >
+                        <img src='./Github.png' alt='linkedin logo'/>
+                        </div>
                     </div>
-                    <div  className='github' >
-                    <img src='./Github.png' alt='linkedin logo'/>
-                    </div>
-                </div>
-                </div>
+                </div> */}
             </div>
         </>
     )

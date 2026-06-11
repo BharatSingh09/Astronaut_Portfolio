@@ -1,92 +1,171 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-.Connect_Main{
+.Connect_Main {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    background: #0a0a0f;
     color: white;
 }
-.connect_header{
-    width: 100vw;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+/* Header */
+.connect_header {
+    width: 100%;
     text-align: center;
-    color: white;
-    font-family: "Pacifico", cursive;
-    font-weight: 400;
-    font-style: normal;
-    font-size: large;
-}
-.connect_main{
-    width: 100vw;
-    height: 90vh;
-    display: flex;
-}
-.Left_section_c{
-    width: 50%;
-    justify-content: center;
-    display: flex;
-}
-.Right_section_c{
-    width: 50%;
-    justify-content: center;
-    display: flex;
-}
-.in_section{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    margin: 2rem;
-    overflow: hidden;
-    cursor: pointer;
 }
 
-.in_section span{
+.connect_header h1 {
     font-family: "Pacifico", cursive;
+    font-size: 2rem;
     font-weight: 400;
-    font-style: normal;
-    font-size: x-large;
+    color: #fff;
+    margin: 0 0 0.5rem;
 }
-/* blur transparent screen */
-.in_section::before{
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(78, 78, 78, 0.375); /* transparent layer */
-    backdrop-filter: blur(10px);
-    opacity: 0;
-    transition: 0.3s ease;
-    z-index: 1;
-    /* pointer-events: none;   */
+
+.connect_header p {
+    font-family: "Inter", sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.45);
+    margin: 0;
+    letter-spacing: 0.01em;
 }
-.hover_text{
-    text-align: center;
-    position: absolute;
-    color: rgb(255, 255, 255);
-    width: 80%;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: 0.3s ease;
-    z-index: 2;
-    font-family: "Pacifico", cursive;
-    font-weight: 400;
-    font-style: normal;
-    font-size: x-large;
+
+/* Main grid */
+.connect_main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1rem 1rem 1rem;
+    width: 100%;
+    max-width: 860px;
+    box-sizing: border-box;
+}
+
+/* Cards */
+.Left_section_c,
+.Right_section_c {
     width: 100%;
 }
 
-/* show on hover */
-.in_section:hover::before{
-    opacity: 1;
+.in_section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 2rem;
+    min-height: 70vh;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: rgba(255,255,255,0.03);
+    transition: transform 0.25s ease, border-color 0.25s ease;
 }
-.in_section:hover .hover_text{
-    opacity: 1;
-    transform: translateY(0);
+
+.in_section:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.15);
+}
+
+/* Image fills the upper card area */
+.in_section img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75%;
+    object-fit: cover;
+    object-position: center top;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9) 40%, transparent 100%);
+    filter: brightness(0.80) saturate(1.1);
+    transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+.in_section:hover img {
+    transform: scale(1.04);
+    filter: brightness(0.5) saturate(1.2);
+}
+
+/* Bottom content area */
+.card_bottom {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+
+.card_label {
+    font-family: "Inter", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+}
+
+.in_section span {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: #fff;
+    line-height: 1.2;
+}
+
+.card_desc {
+    font-family: "Inter", sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 28ch;
+}
+
+.card_cta {
+    margin-top: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Inter", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 100px;
+    padding: 7px 18px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.in_section:hover .card_cta {
+    background: rgba(255,255,255,0.18);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* Footer */
+.connect_footer {
+    font-family: "Inter", sans-serif;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.2);
+    padding: 0 1rem 2rem;
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .connect_main {
+        grid-template-columns: 1fr;
+        padding: 1rem 1rem 2rem;
+    }
+    .in_section {
+        min-height: 340px;
+    }
 }
