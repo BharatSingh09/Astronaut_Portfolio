@@ -36,7 +36,7 @@ export default function Connect() {
                 {/* Hire Me card */}
                 <div className='Right_section_c'>
                     <div className='in_section' >
-                        <img src='./hireme.png' alt='Hire Me' />
+                        <img src='./hire.png' alt='Hire Me' />
                         <div className='card_bottom'>
                             <span>Hire Me</span>
                             <p className='card_desc'>Looking for a developer to join your team? I'm available and excited to contribute.</p>
