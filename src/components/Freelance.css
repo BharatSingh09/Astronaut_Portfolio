@@ -4,7 +4,7 @@
 .freelance_Main {
     width: 100vw;
     min-height: 100vh;
-    background: #0a0a0f;
+    background: #000000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,47 +12,84 @@
     color: white;
 }
 
-.freelance_header {
-    font-family: "Lobster Two", sans-serif;
-    font-weight: 400;
-    font-size: 2rem;
-    color: #fff;
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
-    text-align: center;
-}
-.freelance_header {
-  overflow: hidden;
-  width: 100%;
-}
-
-.marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 15s linear infinite;
-}
-
-.marquee_content {
-  display: flex;
-  gap: 4rem;
-  padding-right: 4rem;
-}
-
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 .freelance_subheader {
     font-family: "Inter", sans-serif;
     font-size: 0.88rem;
     color: rgba(255, 255, 255, 0.38);
-    margin: 0 0 1rem;
+    padding: 0%;
     text-align: center;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    margin: 0%;
+}
+.freelancer_insection{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    margin: 0%;
+    gap: 1rem;
+}
+.freelancer_left,
+.freelancer_right{
+    width: 30%;
+    height: 100%;
+    position: relative;   
+}
+.floating-img{
+    position: absolute;
+    width: 50%;
+    opacity: 0;
+    animation: flash 4s ease forwards;
+    border-radius: 2rem;
+
+    filter:
+        drop-shadow(0 0 8px rgba(51,51,51,0.5))
+        drop-shadow(0 0 20px rgba(51,51,51,0.3));
+
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        black 75%,
+        transparent 100%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        black 75%,
+        transparent 100%
+    );
+}
+.img-0{top:5%;left:5%;}
+.img-2{top:50%;left:40%;}
+.img-4{top:5%;right:5%;}
+.img-6{bottom:5%;left:5%;}
+.img-8{bottom:50%;right:40%;}
+.img-10{bottom:5%;right:5%;}
+.img-1{top:5%;left:5%;}
+.img-3{top:50%;left:40%;}
+.img-5{top:5%;right:5%;}
+.img-7{bottom:5%;left:5%;}
+.img-9{bottom:50%;right:40%;}
+.img-11{bottom:5%;right:5%;}
+
+@keyframes flash{
+    0%{
+        opacity:0;
+        transform:scale(0.9);
+    }
+    20%{
+        opacity:1;
+        transform:scale(1);
+    }
+    80%{
+        opacity:1;
+        transform:scale(1.05);
+    }
+    100%{
+        opacity:0;
+        transform:scale(1.1);
+    }
 }
 
 .freelance_card {
@@ -60,8 +97,8 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 1rem 2rem 1rem;
-    width: 100%;
-    max-width: 460px;
+    width: 30%;
+    height: 100%;
     box-sizing: border-box;
 }
 
