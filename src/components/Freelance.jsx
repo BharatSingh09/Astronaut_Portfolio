@@ -1,7 +1,13 @@
 import './Freelance.css'
 import { useState, useEffect, use } from 'react'
+import emailjs from '@emailjs/browser';
 
 export default function Freelance() {
+    const session=import.meta.env.EMAILJS_SESSIONKEY;
+    const publickey=import.meta.env.EMAILJS_PUBLICKEY;
+    const templateid1=import.meta.env.EMAILJS_SELF_TEMPLATE;
+    const templateid2=import.meta.env.EMAILJS_TO_TEMPLATE;
+
     const [orgType, setOrgType] = useState("")
     const [charCount, setCharCount] = useState(0)
     const greetingImages = [
@@ -40,6 +46,68 @@ export default function Freelance() {
 
         return () => clearInterval(interval);
     }, []);
+
+    const [formData, setFormData] = useState({
+        fullName: "",
+        email: "",
+        orgType: "",
+        organizationName: "",
+        projectDescription: ""
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            // Email to you
+            await emailjs.send(
+                session,
+                templateid1,
+                {
+                    name: formData.fullName,
+                    email: formData.email,
+                    org_type: formData.orgType,
+                    organization_name: formData.organizationName,
+                    project_description: formData.projectDescription,
+                },
+                publickey
+            );
+
+            // Auto-reply to submitter
+            await emailjs.send(
+                session,
+                templateid2,
+                {
+                    name: formData.fullName,
+                    email: formData.email,
+                },
+                publickey
+            );
+
+            alert('Inquiry sent successfully!');
+
+            setFormData({
+                fullName: "",
+                email: "",
+                orgType: "",
+                organizationName: "",
+                projectDescription: ""
+            });
+
+            setCharCount(0);
+        } catch (error) {
+            console.error(error);
+            alert('Failed to send inquiry.');
+        }
+    };
+
     return (
         <div className='freelance_Main'>
             {/* <h1 className="freelance_header">
@@ -70,23 +138,43 @@ export default function Freelance() {
                     )}
                 </div>
                 <div className='freelance_card'>
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className='form_field'>
                             <label className='form_label'>Full name</label>
-                            <input className='form_input' type='text' placeholder='Bharat Singh' required />
+                            <input
+                                className='form_input'
+                                type='text'
+                                name='fullName'
+                                value={formData.fullName}
+                                onChange={handleChange}
+                                placeholder='Bharat Singh'
+                                required
+                            />
                         </div>
 
                         <div className='form_field'>
                             <label className='form_label'>Email</label>
-                            <input className='form_input' type='email' placeholder='you@example.com' required />
+                            <input
+                                className='form_input'
+                                type='email'
+                                name='email'
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder='you@example.com'
+                                required
+                            />
                         </div>
 
                         <div className='form_field'>
                             <label className='form_label'>Organization type</label>
                             <select
                                 className='form_select'
-                                value={orgType}
-                                onChange={(e) => setOrgType(e.target.value)}
+                                name='orgType'
+                                value={formData.orgType}
+                                onChange={(e) => {
+                                    setOrgType(e.target.value);
+                                    handleChange(e);
+                                }}
                             >
                                 <option value=''>Select one</option>
                                 <option value='Individual'>Individual</option>
@@ -96,17 +184,28 @@ export default function Freelance() {
 
                         <div className={`org_field form_field ${orgType === 'Organization' ? 'show' : ''}`}>
                             <label className='form_label'>Organization name</label>
-                            <input className='form_input' type='text' placeholder='Acme Inc.' />
+                            <input
+                                className='form_input'
+                                type='text'
+                                name='organizationName'
+                                value={formData.organizationName}
+                                onChange={handleChange}
+                                placeholder='Acme Inc.'
+                            />
                         </div>
 
                         <div className='form_field'>
                             <label className='form_label'>Project description</label>
                             <textarea
                                 className='form_textarea'
+                                name='projectDescription'
+                                value={formData.projectDescription}
                                 maxLength={1000}
-                                placeholder='Describe your project idea, goals, and timeline...'
                                 required
-                                onChange={(e) => setCharCount(e.target.value.length)}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                    setCharCount(e.target.value.length);
+                                }}
                             />
                             <div className='char_count'>{charCount} / 1000</div>
                         </div>
