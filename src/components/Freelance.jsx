@@ -3,13 +3,14 @@ import { useState, useEffect, use } from 'react'
 import emailjs from '@emailjs/browser';
 
 export default function Freelance() {
-    const session=import.meta.env.EMAILJS_SESSIONKEY;
-    const publickey=import.meta.env.EMAILJS_PUBLICKEY;
-    const templateid1=import.meta.env.EMAILJS_SELF_TEMPLATE;
-    const templateid2=import.meta.env.EMAILJS_TO_TEMPLATE;
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+    const templateId1 = import.meta.env.VITE_EMAILJS_SELF_TEMPLATE;
+    const templateId2 = import.meta.env.VITE_EMAILJS_TO_TEMPLATE;
 
     const [orgType, setOrgType] = useState("")
     const [charCount, setCharCount] = useState(0)
+    const [inquiryStatus,setInquiryStatus] = useState(false)
     const greetingImages = [
         '/bonjor.png',
         '/chienese.png',
@@ -68,31 +69,29 @@ export default function Freelance() {
         try {
             // Email to you
             await emailjs.send(
-                session,
-                templateid1,
+                serviceId,
+                templateId1,
                 {
                     name: formData.fullName,
                     email: formData.email,
                     org_type: formData.orgType,
                     organization_name: formData.organizationName,
                     project_description: formData.projectDescription,
-                },
-                publickey
+                },publicKey
+                
             );
 
             // Auto-reply to submitter
             await emailjs.send(
-                session,
-                templateid2,
+                serviceId,
+                templateId2,
                 {
                     name: formData.fullName,
                     email: formData.email,
-                },
-                publickey
+                },publicKey
+                
             );
-
-            alert('Inquiry sent successfully!');
-
+            setInquiryStatus(true);
             setFormData({
                 fullName: "",
                 email: "",
@@ -102,6 +101,7 @@ export default function Freelance() {
             });
 
             setCharCount(0);
+
         } catch (error) {
             console.error(error);
             alert('Failed to send inquiry.');
@@ -138,80 +138,88 @@ export default function Freelance() {
                     )}
                 </div>
                 <div className='freelance_card'>
-                    <form onSubmit={handleSubmit}>
-                        <div className='form_field'>
-                            <label className='form_label'>Full name</label>
-                            <input
-                                className='form_input'
-                                type='text'
-                                name='fullName'
-                                value={formData.fullName}
-                                onChange={handleChange}
-                                placeholder='Bharat Singh'
-                                required
-                            />
-                        </div>
+                    {!inquiryStatus &&(
+                        <form onSubmit={handleSubmit}>
+                            <div className='form_field'>
+                                <label className='form_label'>Full name</label>
+                                <input
+                                    className='form_input'
+                                    type='text'
+                                    name='fullName'
+                                    value={formData.fullName}
+                                    onChange={handleChange}
+                                    placeholder='Bharat Singh'
+                                    required
+                                />
+                            </div>
 
-                        <div className='form_field'>
-                            <label className='form_label'>Email</label>
-                            <input
-                                className='form_input'
-                                type='email'
-                                name='email'
-                                value={formData.email}
-                                onChange={handleChange}
-                                placeholder='you@example.com'
-                                required
-                            />
-                        </div>
+                            <div className='form_field'>
+                                <label className='form_label'>Email</label>
+                                <input
+                                    className='form_input'
+                                    type='email'
+                                    name='email'
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    placeholder='you@example.com'
+                                    required
+                                />
+                            </div>
 
-                        <div className='form_field'>
-                            <label className='form_label'>Organization type</label>
-                            <select
-                                className='form_select'
-                                name='orgType'
-                                value={formData.orgType}
-                                onChange={(e) => {
-                                    setOrgType(e.target.value);
-                                    handleChange(e);
-                                }}
-                            >
-                                <option value=''>Select one</option>
-                                <option value='Individual'>Individual</option>
-                                <option value='Organization'>Organization</option>
-                            </select>
-                        </div>
+                            <div className='form_field'>
+                                <label className='form_label'>Organization type</label>
+                                <select
+                                    className='form_select'
+                                    name='orgType'
+                                    value={formData.orgType}
+                                    onChange={(e) => {
+                                        setOrgType(e.target.value);
+                                        handleChange(e);
+                                    }}
+                                >
+                                    <option value=''>Select one</option>
+                                    <option value='Individual'>Individual</option>
+                                    <option value='Organization'>Organization</option>
+                                </select>
+                            </div>
 
-                        <div className={`org_field form_field ${orgType === 'Organization' ? 'show' : ''}`}>
-                            <label className='form_label'>Organization name</label>
-                            <input
-                                className='form_input'
-                                type='text'
-                                name='organizationName'
-                                value={formData.organizationName}
-                                onChange={handleChange}
-                                placeholder='Acme Inc.'
-                            />
-                        </div>
+                            <div className={`org_field form_field ${orgType === 'Organization' ? 'show' : ''}`}>
+                                <label className='form_label'>Organization name</label>
+                                <input
+                                    className='form_input'
+                                    type='text'
+                                    name='organizationName'
+                                    value={formData.organizationName}
+                                    onChange={handleChange}
+                                    placeholder='Acme Inc.'
+                                />
+                            </div>
 
-                        <div className='form_field'>
-                            <label className='form_label'>Project description</label>
-                            <textarea
-                                className='form_textarea'
-                                name='projectDescription'
-                                value={formData.projectDescription}
-                                maxLength={1000}
-                                required
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    setCharCount(e.target.value.length);
-                                }}
-                            />
-                            <div className='char_count'>{charCount} / 1000</div>
-                        </div>
+                            <div className='form_field'>
+                                <label className='form_label'>Project description</label>
+                                <textarea
+                                    className='form_textarea'
+                                    name='projectDescription'
+                                    value={formData.projectDescription}
+                                    maxLength={1000}
+                                    required
+                                    onChange={(e) => {
+                                        handleChange(e);
+                                        setCharCount(e.target.value.length);
+                                    }}
+                                />
+                                <div className='char_count'>{charCount} / 1000</div>
+                            </div>
 
-                        <button className='submit_btn' type='submit'>Send inquiry →</button>
-                    </form>
+                            <button className='submit_btn' type='submit'>Send inquiry →</button>
+                        </form>
+                        )}
+                    {inquiryStatus &&(
+                        <div className="inquiry">
+                            <h3>Inquiry Submitted Successfully</h3>
+                            <p>A confirmation email has been sent to your email address.</p>
+                        </div>
+                    )}
                 </div>
                 <div className='freelancer_right'>
                     {activeImage.side === "right" && (

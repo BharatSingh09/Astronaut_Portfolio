@@ -100,6 +100,7 @@
     width: 30%;
     height: 100%;
     box-sizing: border-box;
+    margin-bottom: 2%;
 }
 
 .form_field {
@@ -196,6 +197,30 @@
 .submit_btn:hover {
     opacity: 0.88;
 }
+
+.inquiry{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+.inquiry h3{
+    font-family: "Inter", sans-serif;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0%;
+    text-align:left;
+}
+
+.inquiry p{
+    font-family: "Inter", sans-serif;
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0%;
+    text-align:left;
+}
+
 
 @media (max-width: 500px) {
     .freelance_card {
