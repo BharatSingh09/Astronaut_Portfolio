@@ -76,6 +76,59 @@ export default function Homepage(){
     const navigate = useNavigate();
 
     const audioRef = useRef(null);
+
+    const MAX_PAGE = 8
+    const scrollLocked = useRef(false)
+    const touchStartY = useRef(null)
+
+    // Wheel scroll — one section per scroll gesture
+    useEffect(() => {
+        const handleWheel = (e) => {
+            if (!startAnimation) return
+            if (scrollLocked.current) return
+            scrollLocked.current = true
+            setTimeout(() => { scrollLocked.current = false }, 1000)
+
+            if (e.deltaY > 0) {
+                setPage(p => Math.min(p + 1, MAX_PAGE))
+            } else {
+                setPage(p => Math.max(p - 1, 0))
+            }
+        }
+
+        window.addEventListener('wheel', handleWheel, { passive: true })
+        return () => window.removeEventListener('wheel', handleWheel)
+    }, [startAnimation])
+
+    // Touch scroll support (mobile)
+    useEffect(() => {
+        const handleTouchStart = (e) => {
+            touchStartY.current = e.touches[0].clientY
+        }
+        const handleTouchEnd = (e) => {
+            if (!startAnimation || touchStartY.current === null) return
+            const delta = touchStartY.current - e.changedTouches[0].clientY
+            if (Math.abs(delta) < 30) return  // ignore tiny swipes
+            if (scrollLocked.current) return
+            scrollLocked.current = true
+            setTimeout(() => { scrollLocked.current = false }, 1000)
+
+            if (delta > 0) {
+                setPage(p => Math.min(p + 1, MAX_PAGE))
+            } else {
+                setPage(p => Math.max(p - 1, 0))
+            }
+            touchStartY.current = null
+        }
+
+        window.addEventListener('touchstart', handleTouchStart, { passive: true })
+        window.addEventListener('touchend', handleTouchEnd, { passive: true })
+        return () => {
+            window.removeEventListener('touchstart', handleTouchStart)
+            window.removeEventListener('touchend', handleTouchEnd)
+        }
+    }, [startAnimation])
+
     // Track audio readiness
     useEffect(() => {
         const audio = audioRef.current
@@ -218,16 +271,16 @@ export default function Homepage(){
             }}>
                 {/* home page */}
                 <div className='layer_1'>
-                <div className='intro'>
-                    <span className='hero_subtitle'>Hello! I am</span>
-                    <span className='hero_title'>Bharat Singh</span>
-                    <span className='hero_role'>AI & ML | Software Engineer</span> <br/>
-                    <span className='hero_description'> An AI & ML focues Software Engineer creating intelligent digital solutions.</span>
-                    <span className='hero_description'>From Computer Vision systems and AI Chatbots to<br/>
-                    Web Apps, Desktop Software, and Automation Modules</span>
-                    <span className='hero_description'>I design and develop technology that solves real-world<br/>
-                    problems efficiently.</span>
-                </div>
+                    <div className='intro'>
+                        <span className='hero_subtitle'>Hello! I am</span>
+                        <span className='hero_title'>Bharat Singh</span>
+                        <span className='hero_role'>AI & ML | Software Engineer</span> <br/>
+                        <span className='hero_description'> An AI & ML focues Software Engineer creating intelligent digital solutions.</span>
+                        <span className='hero_description'>From Computer Vision systems and AI Chatbots to<br/>
+                        Web Apps, Desktop Software, and Automation Modules</span>
+                        <span className='hero_description'>I design and develop technology that solves real-world<br/>
+                        problems efficiently.</span>
+                    </div>
                 </div>
                 <div className='layer_2'>
                 </div>
