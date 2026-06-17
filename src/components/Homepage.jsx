@@ -1,18 +1,112 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Suspense} from 'react'
 import {Canvas , useFrame } from "@react-three/fiber"
-import { useGLTF, useAnimations,Stars} from "@react-three/drei"
+import { useProgress } from "@react-three/drei"
 import { useNavigate } from 'react-router-dom'
 import * as THREE from "three"
 import './Homepage.css'
 import Model from './Model'
 import Movingstar from './Movingstar'
-
+// ── Loader overlay ──────────────────────────────────────────────────────────
+function LoaderOverlay({ progress, audioReady }) {
+    const totalProgress = Math.round((progress * 0.7) + (audioReady ? 30 : 0))
+ 
+    return (
+        <div style={{
+            position: 'fixed',
+            inset: 0,
+            background: '#000',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 100,
+            gap: '24px',
+        }}>
+            <div style={{
+                fontFamily: 'Orbitron, sans-serif',
+                fontSize: '13px',
+                letterSpacing: '0.35em',
+                color: 'rgba(255,255,255,0.4)',
+                textTransform: 'uppercase',
+            }}>
+                Loading Experience
+            </div>
+ 
+            <div style={{
+                width: '220px',
+                height: '2px',
+                background: 'rgba(255,255,255,0.1)',
+                borderRadius: '2px',
+                overflow: 'hidden',
+            }}>
+                <div style={{
+                    width: `${totalProgress}%`,
+                    height: '100%',
+                    background: 'white',
+                    borderRadius: '2px',
+                    transition: 'width 0.4s ease',
+                }} />
+            </div>
+ 
+            <div style={{
+                fontFamily: 'Orbitron, sans-serif',
+                fontSize: '11px',
+                color: 'rgba(255,255,255,0.3)',
+                letterSpacing: '0.2em',
+            }}>
+                {totalProgress}%
+            </div>
+        </div>
+    )
+}
+ 
+// ── Inner component that reads drei's useProgress ───────────────────────────
+function SceneProgressReader({ onProgress }) {
+    const { progress } = useProgress()
+    useEffect(() => { onProgress(progress) }, [progress])
+    return null
+}
 export default function Homepage(){
     const [page, setPage] = useState(0)
     const [startAnimation, setStartAnimation] = useState(false)
+    const [everythingLoaded, setEverythingLoaded] = useState(false)
+    const [sceneProgress, setSceneProgress] = useState(0)
+    const [audioReady, setAudioReady] = useState(false)
+    const [imagesReady, setImagesReady] = useState(false)
     const navigate = useNavigate();
 
-    const audioRef = useRef(null)
+    const audioRef = useRef(null);
+    // Track audio readiness
+    useEffect(() => {
+        const audio = audioRef.current
+        if (!audio) return
+        const onCanPlay = () => setAudioReady(true)
+        audio.addEventListener('canplaythrough', onCanPlay)
+        if (audio.readyState >= 4) setAudioReady(true)
+        return () => audio.removeEventListener('canplaythrough', onCanPlay)
+    }, [])
+ 
+    // Preload images
+    useEffect(() => {
+        const srcs = ['/logo.png', './telegram.png']
+        let loaded = 0
+        srcs.forEach(src => {
+            const img = new Image()
+            img.onload = img.onerror = () => {
+                loaded++
+                if (loaded === srcs.length) setImagesReady(true)
+            }
+            img.src = src
+        })
+    }, [])
+ 
+    // Gate: all three signals green
+    useEffect(() => {
+        if (sceneProgress >= 100 && audioReady && imagesReady) {
+            const t = setTimeout(() => setEverythingLoaded(true), 400)
+            return () => clearTimeout(t)
+        }
+    }, [sceneProgress, audioReady, imagesReady])
 
     const startExperience = async () => {
         try {
@@ -32,9 +126,16 @@ export default function Homepage(){
                 src="/Intro_Me.mp3"
                 preload="auto"
             />
+            {/* Loading overlay */}
+            {!everythingLoaded && (
+                <LoaderOverlay
+                    progress={sceneProgress}
+                    audioReady={audioReady}
+                />
+            )}
 
             {/* Start Button */}
-            {!startAnimation && (
+            {everythingLoaded && !startAnimation && (
                 <div
                 style={{
                     position: 'fixed',
@@ -46,11 +147,10 @@ export default function Homepage(){
                     justifyContent: 'center',
                     flexDirection:'column',
                     alignItems: 'center',
-
                     // 50% transparent black background
                     background: 'rgba(0, 0, 0, 0.5)',
-
                     zIndex: 50,
+                     animation: 'fadeIn 0.6s ease'
                 }}
                 >
                 <div style={{
@@ -78,11 +178,18 @@ export default function Homepage(){
 
             <div className='canvas-container'>
                 <Canvas camera={{ position: [0, 0, 8] }}>
-                <Movingstar page={page} />
-                {/* <ambientLight intensity={1} /> */}
-                <directionalLight position={[-3, 0, 5]} intensity={0.25} />
-                <directionalLight position={[3, 0, 5]} intensity={1} />
-                <Model position={[0,-4,0]} scale={[1,1,1]}  audioRef={audioRef} startAnimation={startAnimation}/>
+                    <SceneProgressReader onProgress={setSceneProgress} />
+                    <Suspense fallback={null}>
+                        <Movingstar page={page} />
+                        <directionalLight position={[-3, 0, 5]} intensity={0.25} />
+                        <directionalLight position={[3, 0, 5]} intensity={1} />
+                        <Model
+                            position={[0, -4, 0]}
+                            scale={[1, 1, 1]}
+                            audioRef={audioRef}
+                            startAnimation={startAnimation}
+                        />
+                    </Suspense>
                 </Canvas>
             </div>
       
